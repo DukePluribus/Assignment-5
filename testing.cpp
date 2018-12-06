@@ -1,4 +1,5 @@
 #include "BarcodeArrayScanner.h"
+#include "HashTable.h"
 #include "BarcodeBSTScanner.h"
 #include "time.h"
 
@@ -24,15 +25,28 @@ int main(){
     BinarySearchTree<UPC> codesBST;
     loadData(codesBST, inputFile);
     cout<<endl;
+    cout<<"Loaded BST"<<endl;
 
-long long input=100;
+//*******************************************//
+//          Creates the HashTable            //
+//*******************************************//
 
-while (input != 0){
+    HashTable codesHash;
+    codesHash.loadData(inputFile);
+    cout<<endl<<"Loaded HashTable"<<endl;
+
+
+long long input=10000;
+
+while (input < 100000){
     clock_t BSTtime;
     clock_t ArrayTime;
-    cout<<"What UPC to search for: ";
-    cin>>input;
-    UPC item(input, "");
+    clock_t HashTime;
+    cout<<"Searching for the "<<input<<"th item that is in the array.\n";
+    //cin>>input;
+    UPC item = codesArray[input];
+
+
     t = clock();
     codesBST.search(item);
     BSTtime = clock() - t;
@@ -46,17 +60,13 @@ while (input != 0){
     }
     ArrayTime = clock() - t;
     cout<<"Array time is "<<ArrayTime<<endl;
+
+    t = clock();
+    codesHash.search(item);
+    HashTime = clock() - t;
+    cout<<"HashTable time is "<<HashTime<<endl;
+
+    input = input + 10000;
 }
-
-
-
-    // t = clock();
-    // UPC test(797776092321, "butts");
-    // codesBST.search(test);
-    // t=clock() -t;
-    // cout<<"time is "<<t<<endl;
-    // cout<<CLOCKS_PER_SEC<<" clocks per second"<<endl;
-    // cout<<"time: "<< t*1.0/CLOCKS_PER_SEC<<" seconds"<<endl;
-
     delete[] codesArray;
 }

@@ -15,6 +15,7 @@ class UPC{
 
         UPC();
         UPC(long long _UPCnum, string _info);
+        long long getNum();
         friend bool operator== (const UPC& lhs, const UPC& rhs);
         friend bool operator!= (const UPC& lhs, const UPC& rhs);
         friend bool operator< (const UPC& lhs, const UPC& rhs);
@@ -29,6 +30,10 @@ UPC::UPC(){
 }
 bool UPC::isInitialized(){
     return UPCnum==-123456789;
+}
+
+long long UPC::getNum(){
+    return UPCnum;
 }
 
 UPC::UPC(long long _UPCnum, string _info){
